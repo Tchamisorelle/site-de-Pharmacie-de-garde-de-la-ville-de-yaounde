@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>formulaire_dynam</title>
+  <style>
+    .btn-link {
+      font-size: small;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .btn-link:hover {
+      text-decoration: underline;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+    }
+
+    #togglePassword {
+      cursor: pointer;
+      position: absolute;
+      right: 25px;
+      top: 49%;
+      transform: translateY(-50%);
+      color: #007bff;
+      /* Couleur de l'icône */
+      display: none;
+      transition: color 0.3s;
+    }
+
+    #togglePassword:hover {
+      color: #0056b3;
+      /* Couleur de l'icône au survol */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <!-- Fenêtre modale de connexion -->
+    <div class="modal animate__animated animate__swing show" tabindex="-1" aria-labelledby="swinganimationModalLabel"
+      aria-hidden="true" style="display: block;">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title mx-auto" id="exampleModalLabel">CONNEXION</h4>
+          </div>
+          <div class="modal-body">
+            {% if error_message %}
+            <div class="alert alert-danger">
+              {{ error_message }}
+            </div>
+            {% endif %}
+            <form method="POST" id="form" action="{% url 'user_login' %}">
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email">
+              </div>
+              <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <i class="fas fa-eye-slash" id="togglePassword"></i>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
+                <!-- <i class="fas fa-eye-slash" id="togglePassword"></i> -->
+              </div>
+
+              <div class="modal-footer">
+                {% csrf_token %}
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnEffacer">Effacer</button>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+              </div>
+              <div class="text-center">
+                <a href="{% url 'register' %}" class="btn-link text-decoration-none">S'inscrire</a> |
+                <a href="{% url 'mail' %}" class="btn-link text-decoration-none">Mot de passe oublié ?</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var form = document.getElementById("form");
+      document.getElementById("btnEffacer").addEventListener("click", function () {
+        form.reset();
+        event.preventDefault();
+      });
+    });
+  </script>
+
+  <script>
+    // Fonction pour basculer l'affichage du mot de passe
+    function togglePasswordVisibility() {
+      var passwordField = document.getElementById("password");
+      var icon = document.getElementById("togglePassword");
+
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      } else {
+        passwordField.type = "password";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      }
+    }
+    // Ajoutez un écouteur d'événement pour le clic sur l'icône
+    // document.getElementById("togglePassword").addEventListener("click", togglePasswordVisibility);
+
+    // // Ajoutez un écouteur d'événement pour l'événement input du champ de mot de passe
+    // document.getElementById("password").addEventListener("input", function () {
+    //   // Vous pouvez ajouter ici d'autres logiques si nécessaire
+    //   // Par exemple, vérifier la longueur du mot de passe en temps réel
+    //   var password = this.value;
+    //   var icon = document.getElementById("togglePassword");
+
+    //   if (password.length >= 8) {
+    //     icon.style.color = "green";
+    //   } else {
+    //     icon.style.color = "red";
+    //   }
+    // });
+    document.getElementById("togglePassword").addEventListener("click", togglePasswordVisibility);
+
+    // Ajoutez un écouteur d'événement pour l'événement input du champ de mot de passe
+    document.getElementById("password").addEventListener("input", function () {
+      var icon = document.getElementById("togglePassword");
+      if (this.value.length > 0) {
+        icon.style.display = "block"; // Afficher l'icône lorsque du texte est saisi
+      } else {
+        icon.style.display = "none"; // Masquer l'icône lorsque le champ est vide
+      }
+
+      // Vous pouvez ajouter ici d'autres logiques si nécessaire
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

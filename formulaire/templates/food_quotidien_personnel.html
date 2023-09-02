@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="../static/style.css">
+  <title>Alimentation_predict</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    input[type="submit"] {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #555;
+    }
+
+    .modal-dialog {
+      max-width: 500px;
+      margin: 30px auto;
+    }
+
+    .modal-content {
+      border-radius: 5px;
+    }
+
+    .modal-header {
+      background-color: #333;
+      color: #fff;
+      padding: 15px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .modal-body {
+      padding: 15px;
+    }
+
+    .modal-footer {
+      padding: 15px;
+      text-align: right;
+    }
+
+    .modal-footer .btn-secondary {
+      background-color: #ccc;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .modal-footer .btn-primary {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .modal-footer .btn-primary:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 45px;" aria-label="Eighth navbar">
+    <div class="container"  style="background-color: black; height: 40px;">
+
+      <div class="collapse navbar-collapse" id="navbarsExample07">
+        <ul class="navbar-nav me-auto mb-1 mb-lg-0">
+        <a class="navbar-brand nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
+        
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+  
+
+
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</body>
+
+</html>

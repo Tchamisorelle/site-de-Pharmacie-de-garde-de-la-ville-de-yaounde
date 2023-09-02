@@ -1,0 +1,119 @@
+/* Styles pour le titre */
+h1 {
+  color: #333;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 50px;
+}
+.navbar {
+  margin-bottom: 20px;
+}
+
+/* Styles pour le formulaire */
+form {
+  margin-top: 30px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+
+}
+
+input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Styles pour la prédiction */
+.mt-3 {
+  margin-top: 30px;
+}
+
+#predictionValue {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#btnEffacer {
+  margin-top: 10px;
+}
+
+/* Styles pour le container principal */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  margin-bottom: 20px;
+}
+
+.aliment-name {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.progress {
+  height: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-inner {
+  height: 100%;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  background-color: #007bff;
+  transition: width 0.3s ease-in-out;
+}
+#progressionContainer h3 {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6px;
+ 
+  
+}
+
+a {
+  text-decoration: none;
+  color: #337ab7;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #094579;
+}
+
+a:focus {
+  outline: none;
+}
+
+a:visited {
+  color: #337ab7;
+}
+
