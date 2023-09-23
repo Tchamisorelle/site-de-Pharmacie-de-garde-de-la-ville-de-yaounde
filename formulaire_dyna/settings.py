@@ -75,6 +75,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'formulaire_dyna.wsgi.application'
 # AUTH_USER_MODEL = 'formulaire.formulaire_utilisateur'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+# AUTH_USER_MODEL = 'formulaire.formulaire_utilisateurr'
 
 
 # Database

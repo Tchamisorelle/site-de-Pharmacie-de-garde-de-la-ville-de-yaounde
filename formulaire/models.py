@@ -42,3 +42,11 @@ class ResetLink(models.Model):
 
     def is_valid(self):
         return timezone.now() <= self.expiration_time
+
+class PharmacieDeGarde(models.Model):
+    plage = models.CharField(max_length=100)
+    pharmacie = models.CharField(max_length=200)
+    telephone1= models.CharField(max_length=20)
+    telephone2 = models.CharField(max_length=20)
+    telephone3 = models.CharField(max_length=20)
+    localisation = models.CharField(max_length=200)

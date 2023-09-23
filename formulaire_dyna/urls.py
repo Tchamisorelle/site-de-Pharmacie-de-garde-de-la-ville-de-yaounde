@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
-from formulaire.views import new_utilisateur, index, register, connect,user_login, reset_password_request,rmail,CustomPasswordResetConfirmView,reset_password_complete,reset_password_done
+from formulaire.views import new_utilisateur, index, register, connect,user_login, reset_password_request,rmail,CustomPasswordResetConfirmView,reset_password_complete,reset_password_done, lister_plages_dates,user_logout,suggestion
 from django.contrib.auth import views as auth_views
 
  #nb: le name qui est ici c'est ca qui est appeler dans la page html
@@ -27,6 +27,8 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('connect/', connect, name='connect'),
     path('user_login/', user_login, name='user_login'),
+    path('user_logout/', user_logout, name='user_logout'),
+    
     path('formulaire-inscription/', new_utilisateur, name='sign-up'),
     path('send_mail/', rmail, name='mail'),
     path('mail_reini/', reset_password_request, name='reinitial'),
@@ -34,6 +36,8 @@ urlpatterns = [
     # path("reset-password/", reset_password_request, name="reset_password"),
     path("rest_password/<str:token>/<str:uidb64>/", CustomPasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     path('reset_password_complete/', reset_password_complete, name='reset_password_complete'),
+    path('lister-plages-dates/', lister_plages_dates, name='lister_plages_dates'),
+    path('suggestion/', suggestion, name='suggestion'),
 
 ]
 urlpatterns += staticfiles_urlpatterns()

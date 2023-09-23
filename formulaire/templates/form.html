@@ -59,12 +59,9 @@
 </head>
 
 
-<body>
+<body style="background-color: #f4f4f498;" >
 
-    <div class="container">
-        <app-inscription-form></app-inscription-form>
-    </div>
-    <!-- Modal -->
+    
     <div class="container">
         <div class="modal animate__animated animate__swing show" tabindex="-1"
             aria-labelledby="swinganimationModalLabel" aria-hidden="true" style="display: block;">
@@ -100,19 +97,19 @@
                                 <div class="mb-3">
                                     <label for="nom" class="form-label">Nom</label>
                                     <input type="text" class="form-control" id="nom" name="nom" maxlength="20"
-                                        autocomplete="on" autofocus="autofocus" required="required" placeholder="Nom">
+                                        autocomplete="on" autofocus="autofocus" style="background-color: #f4f4f498;" required="required" placeholder="Nom">
                                 </div>
                                 <div class="mb-3">
                                     <label for="prenom" class="form-label">Prénom</label>
                                     <input type="text" class="form-control" id="prenom" name="prenom" maxlength="20"
                                         autocomplete="on" autofocus="autofocus" required="required"
-                                        placeholder="Prénom">
+                                        placeholder="Prénom" style="background-color: #f4f4f498;" >
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-check-label">Homme où femme?</label><br>
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input" id="homme" name="sexe"
-                                            value="homme" checked="checked">
+                                            value="homme" checked="checked"  >
                                         <label for="homme" class="form-check-label">Homme</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -124,7 +121,7 @@
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Votre mail</label>
                                     <input type="email" placeholder="votre e-mail" class="form-control" id="email"
-                                        name="mail" required>
+                                        name="mail" style="background-color: #f4f4f498;"  required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Entrer mot de passe</label>
@@ -132,14 +129,14 @@
                                         <!-- Utilisez une classe d'input-group Bootstrap pour l'icône et le champ -->
                                         <i class="fas fa-eye-slash input-group-text" id="togglePassword"></i>
                                         <input type="password" placeholder="Password" class="form-control" id="password"
-                                            name="password" required>
+                                            name="password" style="background-color: #f4f4f498;"  required>
                                     </div>
                                     <div id="password_info" class="text-muted"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password_confirm" class="form-label">Confirmez le mot de passe</label>
                                     <input type="password" placeholder="Confirmer votre e-mail" class="form-control"
-                                        id="password_confirm" name="password_confirm" required="required" required>
+                                        id="password_confirm" name="password_confirm" required="required" style="background-color: #f4f4f498;"  required>
 
                                 </div>
 
@@ -151,13 +148,13 @@
                                         <label class="form-check-label">Mineur ou majeur?</label><br>
                                         <div class="form-check form-check-inline">
                                             <input type="checkbox" class="form-check-input"
-                                                name="qualification_chercheur" id="qualification">
-                                            <label for="qualification" class="form-check-label">Chercheur</label>
+                                                name="qualification_chercheur" id="qualification"  >
+                                            <label for="qualification" class="form-check-label">Mineur</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input type="checkbox" class="form-check-input" id="qualification_mentor"
-                                                name="qualification_mentor" checked="checked">
-                                            <label for="qualification_mentor" class="form-check-label">Mentor</label>
+                                                name="qualification_mentor" checked="checked" >
+                                            <label for="qualification_mentor" class="form-check-label">Majeur</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">

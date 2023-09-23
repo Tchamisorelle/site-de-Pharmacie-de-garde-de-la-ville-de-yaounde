@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Géocodage avec suggestions élégantes</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 400px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .position-input {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .suggestion {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .suggestion:hover {
+            background-color: #f0f0f0;
+        }
+
+        .suggestion i {
+            margin-right: 5px;
+        }
+
+        .suggestion.current-position {
+            display: flex;
+            align-items: center;
+            font-weight: ;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <form>
+        <label for="start">Point de départ :</label>
+        <div class="position-input">
+            <input type="text" id="start" placeholder="Entrer un lieu" />
+            <div id="suggestions" class="suggestions"></div>
+        </div>
+    </form>
+
+    <script>
+        // Créez une carte Leaflet
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        // Ajoutez une couche de tuiles (par exemple, OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Créez le contrôle de géocodage
+        var geocoder = L.Control.Geocoder.nominatim();
+
+        // Écoutez l'événement "input" sur le champ de départ
+        var startInput = document.getElementById('start');
+        var suggestionsContainer = document.getElementById('suggestions');
+
+        startInput.addEventListener('input', function () {
+            var userInput = startInput.value.trim();
+
+            // Vérifiez si la valeur saisie est suffisamment longue pour envoyer une requête de géocodage
+            if (userInput.length >= 3) {
+                // Utilisez le géocodeur pour obtenir des suggestions
+                geocoder.geocode(userInput, function (results) {
+                    suggestionsContainer.innerHTML = '';
+
+                    // Ajoutez l'option "Votre position" avec une icône de localisation
+                    var currentPositionOption = document.createElement('div');
+                    currentPositionOption.classList.add('suggestion', 'current-position');
+                    currentPositionOption.innerHTML = '<i class="fas fa-map-marker-alt"></i> Votre position';
+                    currentPositionOption.addEventListener('click', function () {
+                        // Utilisez la géolocalisation pour déterminer la position actuelle de l'utilisateur
+                        if ("geolocation" in navigator) {
+                            navigator.geolocation.getCurrentPosition(function (position) {
+                                var latitude = position.coords.latitude;
+                                var longitude = position.coords.longitude;
+// Remplacez ces coordonnées par les vôtres
+// Effectuez une requête de géocodage inversé avec Nominatim
+const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+fetch(reverseGeocodeUrl)
+  .then(response => response.json())
+  .then(data => {
+    // Le nom du lieu se trouve dans la propriété "display_name" des résultats
+    const placeName = data.display_name;
+    console.log(`Le nom du lieu est : ${placeName}`);
+  })
+  .catch(error => {
+    console.error('Erreur lors du géocodage inversé :', error);
+  });
+
+                                // Traitez la position actuelle de l'utilisateur
+                                alert('Votre position actuelle : Latitude ' + lat + ', Longitude ' + lon);
+                            });
+                        } else {
+                            alert("La géolocalisation n'est pas disponible dans ce navigateur.");
+                        }
+                    });
+                    suggestionsContainer.appendChild(currentPositionOption);
+
+                    // Ajoutez les autres suggestions de géocodage
+                    results.forEach(function (result) {
+                        var suggestion = document.createElement('div');
+                        suggestion.classList.add('suggestion');
+                        suggestion.textContent = result.name;
+                        suggestion.addEventListener('click', function () {
+                            // Traitez la sélection de la suggestion ici
+                            alert('Vous avez sélectionné : ' + result.name);
+                        });
+                        suggestionsContainer.appendChild(suggestion);
+                    });
+
+                    // Affichez la liste des suggestions
+                    suggestionsContainer.style.display = 'block';
+                });
+            } else {
+                // Masquez la liste des suggestions si la saisie est trop courte
+                suggestionsContainer.style.display = 'none';
+            }
+            
+        });
+    </script>
+</body>
+</html>

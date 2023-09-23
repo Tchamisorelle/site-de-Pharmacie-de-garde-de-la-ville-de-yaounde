@@ -1,42 +1,1701 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Assurez-vous d'inclure Font Awesome dans votre projet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>pharma.garde</title>
+
+    <!-- Intégration de Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-minimap/dist/Control.MiniMap.min.css" />
+    <!-- Intégration de FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://api.opencagedata.com/geocode/v1/leaflet.js?key=24f3df5011b84ebf979455e38e45d63c"></script> -->
+
     <style>
-        /* Style de base pour l'icône de profil */
-        .profile-icon {
+        /* .content {
+            flex: 1;
+            padding: 20px;
+            background-color: rgba(96, 211, 237, 0.058);
+            margin: 60px;
+            backdrop-filter: blur(0px);
+            border-radius: 50px;
+        } */
+
+        h4 {
             font-size: 24px;
-            /* Taille de l'icône */
-            color: #007bff;
-            /* Couleur de l'icône */
-            /* display: none; */
-            /* Masquer par défaut */
+            margin-bottom: 20px;
         }
 
-        /* Style pour l'icône de profil lorsque l'utilisateur est connecté */
-        .user-loggedin .profile-icon {
-            display: inline-block;
-            /* Afficher lorsque l'utilisateur est connecté */
+        .map-container {
+            flex: 1;
+
+            margin-right: 30px;
+
+            /* La carte occupe autant d'espace que possible dans la colonne de droite */
+            height: 98vh;
+            width: 130vh;
+            /* Ajustez la hauteur de la carte en fonction de la hauteur de la fenêtre */
+
+            box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.5);
+            /* Ombre interne */
         }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f498;
+        }
+
+
+
+        .content-box {
+            background-color: #f4f4f498;
+            /* Couleur de fond blanche */
+            padding: 0px;
+            margin-top: 10px;
+            /* Ajoutez de la marge intérieure pour l'espace de contenu */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.049);
+            border-radius: 10px;
+            /* Ombre plus grande et plus foncée */
+
+            box-shadow: inset 0px 0px 03px rgba(0, 0, 0, 0.5);
+            /* Ombre interne */
+
+            /* Espacement autour de la boîte de contenu */
+        }
+
+
+
+        #carte {
+            height: 98vh;
+            width: 137vh;
+
+            box-shadow: 5px 5px 10px rgba(95, 53, 250, 0.09);
+            border-radius: 10px;
+
+            box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.5);
+            /* Ombre interne */
+
+        }
+
+        /* Ajoutez ces styles CSS à votre feuille de style existante */
+        .custom-button {
+            float: left;
+
+            /* Positionne l'élément vers la droite */
+            margin-right: 0px;
+            margin-top: 90px;
+            margin-left: 10px;
+            /* Espace entre l'élément et le coin supérieur droit */
+            font-size: 25px;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            color: white;
+        }
+
+        .custom-button:hover {
+            background-color: rgb(241, 239, 239);
+            opacity: 1;
+            width: 40px;
+            height: 40px;
+        }
+
+        .custom-iconn {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        i:hover {
+            opacity: 1;
+            color: black;
+        }
+
+        i {
+            color: black;
+            opacity: 0.8;
+        }
+
+        /* Styles CSS pour la classe my-custom-control-class */
+        .my-custom-control-class {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            padding: 3px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        /* Styles CSS pour les liens à l'intérieur de l'élément div */
+        .my-custom-control-class a {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Styles CSS pour les liens au survol */
+        .my-custom-control-class a:hover {
+            background-color: rgba(232, 229, 229, 0.8);
+        }
+
+
+        #current-date {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Style pour le modal */
+        .modal {
+            position: absolute;
+            top: 50px;
+            left: 120px;
+            max-width: 400px;
+            max-height: 330px;
+            /* Largeur maximale du modal */
+            background-color: #fff;
+            /* Couleur de fond du modal */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            /* Ombre légère */
+        }
+
+        /* Style pour le contenu du modal */
+
+
+        /* Style pour le bouton de fermeture */
+        #close-icon {
+            color: #777;
+            opacity: 0.5;
+        }
+
+        .profile-button {
+            display: block;
+            background-color: #007bff;
+            /* Couleur de fond du bouton */
+            color: #fff;
+            /* Couleur du texte du bouton */
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer !important;
+            width: 100%;
+        }
+
+        /* Style pour le bouton de déconnexion au survol */
+        .profile-button:hover {
+            background-color: #0056b3 !important;
+            /* Couleur de fond du bouton au survol */
+        }
+
+        /* Style pour le bouton de fermeture au survol */
+        #close-icon:hover {
+            color: #000000;
+            opacity: 1;
+        }
+
+        /* Style de la div contenant les informations de la pharmacie */
+        #pharmacyData {
+            max-height: 550px;
+            /* Limitez la hauteur de la div pour éviter le débordement */
+            overflow-y: auto;
+            /* Ajoutez une barre de défilement en cas de dépassement de la hauteur */
+            border: 1px solid #ccc;
+            /* Ajoutez une bordure pour délimiter la zone */
+            padding: 5px;
+            /* Ajoutez un espacement interne pour plus de lisibilité */
+            background-color: #f7f7f7;
+            /* Couleur de fond */
+            border-radius: 5px;
+            /* Coins arrondis */
+        }
+
+        /* Style pour la table des informations */
+        #pharmacyData table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        /* Style pour les en-têtes de colonne */
+        /* #pharmacyData th {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+            padding: 8px;
+            text-align: left;
+        } */
+        #pharmacyData th {
+            background-color: #333;
+
+            color: #fff;
+            font-weight: bold;
+            padding: 10px 15px;
+            /* Augmentez la marge intérieure pour une meilleure apparence */
+            text-align: left;
+            border-bottom: 2px solid #ccc;
+            /* Ajoutez une bordure inférieure */
+        }
+
+        /* Style pour les lignes de la table */
+        #pharmacyData td {
+            padding: 4px;
+            border-bottom: 1px solid #ccc;
+            font-size: 12px;
+        }
+
+        /* Style pour les liens téléphoniques */
+        #pharmacyData a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        /* Style pour la classe .fa-solid de Font Awesome */
+        #pharmacyData .fa-solid {
+            margin-right: 5px;
+        }
+
+        #currentDateElement {
+            font-size: 18px;
+            font-weight: bold;
+            color: #090808;
+            /* Couleur du texte */
+            background-color: #f4f9ff;
+            /* Couleur de fond */
+            padding: 10px;
+            /* Espacement intérieur */
+            border: 1px solid #ccc;
+            /* Bordure */
+            border-radius: 5px;
+            /* Coins arrondis */
+            text-align: center;
+            /* Alignement du texte au centre */
+            margin-bottom: 20px;
+            /* Marge en bas */
+        }
+
+        /* Style du formulaire */
+        form {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        /* Style du label */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Style de l'input de date */
+        input[type="date"] {
+            padding: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Style du bouton Rechercher */
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .leaflet-routing-geocoder span:first-child {
+            background-color: none;
+        }
+
+        .leaflet-routing-geocoder span:nth-child(2) {
+            /* Styles pour le deuxième span dans les éléments avec la classe .leaflet-routing-geocoder */
+            background-color: none;
+        }
+
+        input[placeholder="Start"] {
+
+            left: 10px;
+            /* Autres propriétés CSS */
+            width: 260px;
+        }
+
+        input[placeholder="End"] {
+
+            left: 10px;
+            /* Autres propriétés CSS */
+            width: 260px;/
+        }
+
+        .leaflet-routing-geocoders .leaflet-routing-geocoder:first-child i.fas.fa-map-marker-alt::before {
+            color: green;
+            font-weight: 900;
+            /* Change la couleur de l'icône en rouge */
+            font-size: 18px;
+            /* Modifie la taille de l'icône */
+            /* Ajoutez d'autres styles selon vos besoins */
+            margin-top: 30px;
+        }
+
+        .leaflet-routing-geocoders .leaflet-routing-geocoder:nth-child(2) i.fas.fa-map-marker-alt::before {
+            color: red;
+            /* Change la couleur de l'icône en rouge */
+            font-size: 18px;
+            /* Modifie la taille de l'icône */
+            /* Ajoutez d'autres styles selon vos besoins */
+            margin-top: 30px;
+            margin-left: 0px;
+        }
+
+        /* Style CSS pour le titre */
+        h4 {
+            font-size: 22px;
+            /* Taille de la police */
+            font-weight: bold;
+            /* Gras */
+            text-align: center;
+            /* Centrer le texte */
+            color: #007bff;
+            text-transform: uppercase;
+            /* Souligner le texte */
+            margin-top: 20px;
+            /* Marge en haut pour l'espacement */
+            margin-bottom: 30px;
+            /* Marge en bas pour l'espacement */
+        }
+
+
+        .hidden {
+            display: none;
+        }
+
+        /* CSS */
+        .my-icon {
+            color: rgba(10, 10, 232, 0.801);
+            /* Changez la couleur en rouge, par exemple */
+            /* Ajoutez d'autres styles CSS au besoin */
+        }
+
+        .my-icon:hover {
+            color: rgba(10, 10, 232, 0.801);
+            /* Changez la couleur en rouge, par exemple */
+            /* Ajoutez d'autres styles CSS au besoin */
+        }
+
+        img.leaflet-marker-icon:first-child {
+            /* Styles pour le premier élément */
+            /* background-color: green; */
+            /* Exemple : bordure rouge */
+            /* content: none; */
+        }
+
+        img.leaflet-marker-icon:nth-child(2) {
+            /* Styles pour le deuxième élément */
+            /* background-color: rgb(228, 34, 34);
+            color: rgb(228, 34, 34) !important; */
+            /* content: none; */
+            /* Exemple : bordure bleue */
+        }
+
+        /* CSS pour masquer le pseudo-élément ::after */
+        .leaflet-routing-remove-waypoint::after {
+            content: none;
+        }
+
+        /* Style pour les icônes de suppression */
+        .clear-icon {
+            cursor: pointer;
+            /* Affiche un curseur pointeur au survol */
+            font-size: 16px;
+            /* Taille de la police de l'icône */
+            color: rgb(3, 3, 3);
+            /* Couleur de l'icône (rouge) */
+            margin-right: 0px;
+            position: fixed;
+        }
+
+        .clear-icon:hover {
+            cursor: pointer;
+            /* Affiche un curseur pointeur au survol */
+            font-size: 16px;
+            /* Taille de la police de l'icône */
+            color: rgb(3, 3, 3);
+            /* Couleur de l'icône (rouge) */
+            margin-right: 0px;
+            position: fixed;
+        }
+
+        .position {
+            font-size: 15px;
+            color: #007bff;
+            cursor: pointer;
+
+        }
+
+        .position:hover {
+            color: blue;
+        }
+
+        /* Classe pour le marqueur "Start" */
+        .custom-icon-start {
+            color: green;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Classe pour le marqueur "End" */
+        .custom-icon-end {
+            color: red;
+            font-size: 20x;
+            font-weight: bold;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="email"],
+        #objet,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h5 {
+            text-align: center;
+            color: #007bff;
+            padding: 0px 100px;
+        }
+
+        .fixed-div {
+            position: fixed;
+            top: 901px;
+            /* Ajustez la position verticale selon vos besoins */
+            right: 0px;
+            /* Ajustez la position horizontale selon vos besoins */
+            background-color: #f9f4f4;
+            /* padding: 10px; */
+            border-radius: 5px;
+            z-index: 999;
+            /* Assurez-vous que la div est au-dessus du reste du contenu */
+        }
+
+        /* Style pour le lien */
+        .fixed-div span {
+            color: #0e0c0c;
+            text-decoration: none;
+            padding-left: 300px;
+        }
+
+        /* Style au survol du lien */
+        .fixed-div a:hover {
+            text-decoration: underline;
+        }
+        @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+        }
+
+        .anim {
+        font-size: 24px;
+        color: blue;
+        animation: blink 2s infinite; /* L'animation "blink" durera 2 secondes et se répétera indéfiniment */
+        }
+        @keyframes colorChange {
+  10% { color: rgb(70, 239, 70);  }
+  30% { color:rgb(92, 232, 245);}
+  50% { color: rgb(70, 239, 70); }
+  80% { color: rgb(36, 18, 136); }
+  100% { color: rgb(92, 232, 245); }
+}
+
+.anim {
+  animation: colorChange 4s linear infinite;
+}
+
+
     </style>
+
 </head>
 
 <body>
-    <div class="container-fluid">
-        
-        <div class="profile-icon {% if user.is_authenticated %}user-loggedin{% endif %}">
-            <i class="fas fa-user"></i>
-        </div>
-        
 
+    <div class="container-fluid">
+        <div class="content-box">
+            <div class="row">
+                <div class="col-xl-8 col-lg-8 col-md-4 col-xs-8 col-sm-8">
+                    <div class="map-container">
+                        <div id="carte">
+                            <div id="itineraire-button"
+                                class="leaflet-bar leaflet-control leaflet-control-custom custom-button">
+                                <a href="#"><i class="fa-solid fa-route custom-iconn" title="itineraire"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-8 col-xs-4 col-sm-4" style="background-color:  #f0f8f9">
+                    <h6 id="toggle-profile" style="margin-right: 10px; margin-top: 10px; margin-bottom: 0px;"
+                        data-toggle="modal" data-target="#myModal">
+                        <i class="fas fa-user" title="Profil {{ email }}"
+                            style="cursor: pointer; font-size: 35px; float: right; color: rgb(10, 58, 248, 0.8);"></i>
+                    </h6>
+                    <div class="modal fade" id="myModal" data-backdrop="static"
+                        style="position: absolute; padding-bottom:0px ;">
+                        <div style="position: relative;">
+                            <i id="close-icon" class="fas fa-times"
+                                style="position: absolute; top: 7px; right: 7px; font-size: 24px; cursor: pointer;"
+                                title="Close" data-dismiss="modal"></i>
+                        </div>
+                        <div class="modal-dialog" style="padding-bottom: 0px;">
+                            <div class="modal-content" style="border: none; margin-bottom: 0px;">
+                                <div class="profile-details"
+                                    style="padding-bottom: 0px; padding-left: 50px; padding-top: 30px; padding-right: 50px;">
+                                    <center>
+                                        <i class="fas fa-user"
+                                            style="font-size: 50px; padding-bottom: 16px;padding-left:40px; color: rgb(10, 58, 248); opacity: 1;"></i>
+                                        <br>
+
+                                        {% if request.session.user_info.first_name %}
+                                        <p style="font-size: 20px;" id="prenom">Bonjour, {{ request.session.user_info.first_name }} !</span></p>
+                                        {% else %}
+                                        <p style="font-size: 20px;" id="prenom"></p>
+                                        {% endif %}
+
+                                    </center>
+                                    <p><strong><i class="fas fa-user" style="color: black;"></i> Nom :</strong><span
+                                            id="first-name">{{ request.session.user_info.last_name }}</span></p>
+                                    <p><strong><i class="fas fa-envelope"></i> Email :</strong><span id="mail"> {{ request.session.user_info.email }}</span></p>
+                                    <div class="modal-footer" style="padding-left: 0px; float: left;">
+                                        <a href="{% url 'user_logout' %}" class="btn btn-primary"
+                                            style="margin: 10px; float: left;"><i class="fas fa-sign-out-alt"
+                                                style="color: white;"></i><span
+                                                style="cursor: pointer;">Déconnexion</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <center>
+                        <!-- Modèle de boîte de dialogue modale -->
+
+                        <div
+                            style="margin-right: 0px; margin-left: 20px; margin-top: 50px; border-left: 10px solid #f4f4f435;">
+                            <h4 class = "anim" style="color: rgb(250, 239, 81); font-weight: bolder; -webkit-text-stroke: 1px rgba(248, 251, 252, 0.59);">pharmacies de garde yaoundé</h4>
+                            <!-- <p><i class="fa-solid fa-house-medical"></i></p> -->
+
+                            <form>
+                                <label for="datePicker">Sélectionnez une date :</label>
+                                <input type="date" style="background-color: #f4f4f498;" id="datePicker"
+                                    name="datePicker">
+                                <button type="button" class="button"
+                                    style="font-size: 20px; font-family: 'Roboto', sans-serif;"
+                                    onclick="searchPharmacy()">Rechercher</button>
+                            </form>
+                            <div class="modal fade" id="inscriptionModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content"
+                                        style="background-color: #f4f4f498; padding-left: 10px; margin-left:8px">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="color: red;">Inscription Requise</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Vous devez vous inscrire pour accéder à cette fonctionnalité.</p>
+                                            <!-- Ajoutez ici un formulaire d'inscription ou tout autre contenu nécessaire -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{% url 'register' %}" class="btn btn-primary">S'inscrire</a>
+                                            <a href="{% url 'index' %}" class="btn btn-primary">Se connecter</a>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Annuler</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="currentDateElement" style="background-color: rgba(149, 251, 188, 0.226);"></div> <!-- L'élément pour afficher la date actuelle -->
+
+                            <div id="pharmacyData">
+                                <!-- Les informations de la pharmacie seront affichées ici -->
+                            </div>
+
+
+                        </div>
+                    </center>
+                    <div class="fixed-div">
+                        <span style="background-color: none; opacity: 0.7;">
+                            <a href="#" style="color: #000000; font-size: 12px;">A propos | </a>
+                            <a href="suggestion" id="suggestion-link" style="cursor: pointer; color: #000000; font-size: 12px;" data-toggle="modal"
+                                data-target="#suggestion">Suggestion |</a>
+                            <a href="pharma.prjt.yde@gmail.com" style="color: #000000; font-size: 12px;">&copy; 2023 pharma.prjt.yde</a>
+                        </span>
+                    </div>
+                    <div class="modal fade" id="suggestion" style="float: left;">
+                        <div class="modal-dialog">
+                            <div class="modal-content"
+                                style="background-color: #f4f4f498; padding-left: 10px; margin-left:8px">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Suggestion</h5>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="suggestion-form" action="{% url 'suggestion' %}" method="POST">
+                                        {% csrf_token %}
+                                        {% if messages %}
+                                        <div class="messages">
+                                            {% for message in messages %}
+                                            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                            <div class="alert alert-success" role="alert">
+                                                <p>{{ message }}</p>
+                                            </div>
+                                
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endif %}
+                                        <label for="email">E-mail :</label>
+                                        <input type="email" id="email" name="email" required>
+                                        <label for="email">Objet :</label>
+                                        <input type="text" id="objet" name="objet" required>
+                                        <label for="message">Message :</label>
+                                        <textarea id="message" name="message" rows="4" required></textarea>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Annuler</button>
+
+                                            <button type="submit">Envoyer</button>
+                                            
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
+<script>
     
+</script>
+    <script>
+
+        let plagesInformations;
+        let currentDate;
+        // Déclarez la variable plagesInformations en dehors des fonctions pour la rendre globale
+        function parseDate(dateString) {
+            // Divisez la chaîne de date en ses composants (jour, mois, année, heure, etc.)
+            const dateComponents = dateString.split(' ');
+
+            // Obtenez le jour, le mois, l'année et l'heure à partir des composants
+            const day = dateComponents[1];
+            const month = dateComponents[2];
+            const year = dateComponents[3];
+            const startTime = dateComponents[6];
+            const endTime = dateComponents[10];
+
+            // Convertissez le mois en un format numérique (par exemple, Aoû. en 08)
+            const monthMappings = {
+                'Janv.': '01',
+                'Févr.': '02',
+                'Mars': '03',
+                'Avr.': '04',
+                'Mai': '05',
+                'Juin': '06',
+                'Juil.': '07',
+                'Aoû.': '08',
+                'Sept.': '09',
+                'Oct.': '10',
+                'Nov.': '11',
+                'Déc.': '12',
+            };
+            const monthNumeric = monthMappings[month];
+
+            // Construisez les dates de début et de fin au format ISO (jj.mm.yyyy à HH:mm)
+            const startDateString = `${day}.${monthNumeric}.${year} à ${startTime}`;
+            const endDateString = `${day}.${monthNumeric}.${year} à ${endTime}`;
+
+            // Créez des objets Date à partir des chaînes de date
+            const startDate = new Date(startDateString);
+            const endDate = new Date(endDateString);
+
+            // Retournez un objet contenant les dates de début et de fin
+            return { startDate, endDate };
+        };
+       
+        const datePicker = document.getElementById('datePicker');
+        datePicker.addEventListener('change', searchPharmacy);
+        // Fonction pour charger les données JSON et afficher les informations de la date actuelle
+        function fetchAndDisplayData(index) {
+            // Récupération des données JSON depuis votre endpoint Django
+            fetch('/lister-plages-dates/')
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Réponse réseau incorrecte');
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    // Stockez les données récupérées dans la variable globale plagesInformations
+                    plagesInformations = data;
+                    searchPharmacy1();
+                    
+                })
+                .catch(function (error) {
+                    console.error('Erreur lors de la récupération des données JSON :', error);
+                });
+        };
+
+        // Appelez fetchAndDisplayData() au chargement de la page pour afficher les informations de la date actuelle
+        window.addEventListener('load', function () {
+            fetchAndDisplayData(0);
+        });
+
+        function searchPharmacy1() {
+            const selectedDate = new Date(); // Récupérez la date sélectionnée par l'utilisateur
+            const year = selectedDate.getFullYear();
+            // JavaScript commence les mois à partir de 0, alors ajoutez 1 au mois
+            const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = selectedDate.getDate().toString().padStart(2, '0');
+
+            // Formatez la date au format "YYYY-MM-DD"
+            const formattedDate = `${year}-${month}-${day}`;
+
+            // formattedDate contient maintenant la date au format "YYYY-MM-DD"
+            // console.log(formattedDate);
+            
+            
+            // Créez la date au format souhaité (par exemple, 'Jeu. 02 Nov. 2023 à 8h')
+            const formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
+
+            // Créez la date du jour suivant à 8h en ajoutant 1 jour à la date sélectionnée
+            const selectedDateObj = new Date(year, month - 1, day, 8);
+            // Vérifiez le jour de la semaine
+            const dayOfWeek = selectedDateObj.getDay();
+
+            // Si le jour est un samedi (6), ajoutez 2 jours
+            if (dayOfWeek === 6) {
+                selectedDateObj.setDate(selectedDateObj.getDate() + 2);
+            } else {
+                // Sinon, ajoutez 1 jour
+                selectedDateObj.setDate(selectedDateObj.getDate() + 1);
+            }
+
+            // Créez la date du jour suivant au format souhaité
+            const nextYear = selectedDateObj.getFullYear();
+            const nextMonth = selectedDateObj.getMonth() + 1;
+            const nextDay = selectedDateObj.getDate();
+            const formattedNextDay = `${getDayOfWeek(nextYear, nextMonth, nextDay)} ${formatDay(nextDay)} ${getMonthName(nextMonth)} ${nextYear} à 8h`;
+
+
+
+            // Combinez les deux dates pour obtenir la plage de dates complète
+            const searchDateRange = `${formattedSelectedDate} - ${formattedNextDay}`;
+            console.log("searchDateRange:", searchDateRange);
+            currentDateElement.textContent = searchDateRange;
+
+            // Maintenant, vous pouvez rechercher cette plage de dates dans vos données JSON
+            const pharmacyData = plagesInformations.find(function (data) {
+
+                return searchDateRange === data['Plage de dates'];
+
+            });
+
+            const icons = document.querySelectorAll('.fa-map-location-dot');
+
+            icons.forEach(function (icon) {
+                icon.addEventListener('click', function () {
+                    // Trouvez l'élément de localisation associé
+                    const localisationElement = icon.nextElementSibling;
+
+                    // Récupérez la valeur de localisation à partir de l'élément
+                    const localisation = localisationElement.textContent;
+
+                    // Affichez la valeur de localisation dans la console ou faites ce que vous voulez avec elle
+                    console.log('Localisation:', localisation);
+                });
+            });
+
+
+            if (pharmacyData) {
+                // Affichez les informations de pharmacie
+                const pharmacyInfo = pharmacyData['Informations'];
+                let pharmacyHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pharmacie</th>
+                        <th>phone 1</th>
+                        <th>phone 2</th>
+                        <th>phone 3</th>
+                        <th>Localisation</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+
+                pharmacyInfo.forEach(function (info) {
+                    pharmacyHTML += `
+            <tr>
+                <td>${info.pharmacie}</td>
+                <td style='font-size: 12px;'><a href="tel:${info.telephone1}">${info.telephone1}</a></td>
+                <td style='font-size: 12px;'><a href="tel:${info.telephone2}">${info.telephone2}</a></td>
+                <td style='font-size: 12px;'><a href="tel:${info.telephone3}">${info.telephone3}</a></td>
+                <td>
+                    <i class="fa-solid fa-map-location-dot localisation" style='cursor: pointer; font-size:18px; color: rgb(10, 58, 248)' ></i>
+                    <span class="hidden localisation local" style="cursor: pointer; color: rgb(10, 58, 248);"><p style='font-size:11px;'>${info.localisation}</p></span>
+                </td>
+            </tr>
+            
+            `;
+                });
+
+                pharmacyHTML += `
+                </tbody>
+             </table>
+             `;
+
+
+                // Placez le contenu HTML généré dans un élément de votre page HTML où vous souhaitez afficher les informations
+                document.getElementById('pharmacyData').innerHTML = pharmacyHTML;
+                const icons = document.querySelectorAll('.fa-map-location-dot');
+
+
+
+
+                // Ajoutez un gestionnaire d'événements de clic à chaque icône
+                icons.forEach(function (icon) {
+
+                    icon.style.padding = '7px 60px';
+                    icon.classList.toggle('my-icon');
+                    icon.addEventListener('click', function () {
+                        // Trouvez l'élément de localisation associé
+                        const prenomValue = document.querySelector('#prenom').textContent.trim(); // Assurez-vous d'ajuster le sélecteur en fonction de votre structure HTML
+                        if (prenomValue === '') {
+                            // Le champ prenom est vide, affichez la boîte de dialogue modale en utilisant Bootstrap
+                            $('#inscriptionModal').modal('show');
+                        }
+                        else {
+
+                            var localisationElement = icon.nextElementSibling;
+
+                            var itineraireInput = document.querySelector('input[placeholder="End"]');
+                            // Vérifiez si l'élément est déjà visible
+                            var isVisible = !localisationElement.classList.contains('hidden');
+
+                            // Si l'élément est visible, masquez-le ; sinon, affichez-le
+                            if (isVisible) {
+                                localisationElement.classList.add('hidden');
+                            } else {
+                                localisationElement.classList.remove('hidden');
+                                var localisationValue = localisationElement.textContent.trim();
+                                itineraireInput.value = localisationValue;
+
+                            }
+                        };
+                    });
+                });
+
+
+            } else {
+                // Aucune pharmacie trouvée pour la plage de dates sélectionnée
+                document.getElementById('pharmacyData').innerHTML = 'Aucune pharmacie trouvée pour la date sélectionnée.';
+            }
+        };
+       
+
+        // Ajoutez un gestionnaire d'événements à l'élément datePicker
+        // const datePicker = document.getElementById('datePicker');
+        // datePicker.addEventListener('change', searchPharmacy);
+
+        // La fonction searchPharmacy() sera désormais appelée lorsque la date est modifiée
+
+        function searchPharmacy() {
+            const selectedDate = document.getElementById('datePicker').value; // Récupérez la date sélectionnée par l'utilisateur
+            const dateParts = selectedDate.split('-'); // Séparez la date en année, mois et jour
+            // console.log(selectedDate);
+            const year = dateParts[0];
+            const month = dateParts[1];
+            const day = dateParts[2];
+            
+            // Créez la date au format souhaité (par exemple, 'Jeu. 02 Nov. 2023 à 8h')
+            const formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
+
+            // Créez la date du jour suivant à 8h en ajoutant 1 jour à la date sélectionnée
+            const selectedDateObj = new Date(year, month - 1, day, 8);
+            // Vérifiez le jour de la semaine
+            const dayOfWeek = selectedDateObj.getDay();
+
+            // Si le jour est un samedi (6), ajoutez 2 jours
+            if (dayOfWeek === 6) {
+                selectedDateObj.setDate(selectedDateObj.getDate() + 2);
+            } else {
+                // Sinon, ajoutez 1 jour
+                selectedDateObj.setDate(selectedDateObj.getDate() + 1);
+            }
+
+            // Créez la date du jour suivant au format souhaité
+            const nextYear = selectedDateObj.getFullYear();
+            const nextMonth = selectedDateObj.getMonth() + 1;
+            const nextDay = selectedDateObj.getDate();
+            const formattedNextDay = `${getDayOfWeek(nextYear, nextMonth, nextDay)} ${formatDay(nextDay)} ${getMonthName(nextMonth)} ${nextYear} à 8h`;
+
+
+
+            // Combinez les deux dates pour obtenir la plage de dates complète
+            const searchDateRange = `${formattedSelectedDate} - ${formattedNextDay}`;
+            console.log("searchDateRange:", searchDateRange);
+            currentDateElement.textContent = searchDateRange;
+
+            // Maintenant, vous pouvez rechercher cette plage de dates dans vos données JSON
+            const pharmacyData = plagesInformations.find(function (data) {
+
+                return searchDateRange === data['Plage de dates'];
+
+            });
+
+            const icons = document.querySelectorAll('.fa-map-location-dot');
+
+            icons.forEach(function (icon) {
+                icon.addEventListener('click', function () {
+                    // Trouvez l'élément de localisation associé
+                    const localisationElement = icon.nextElementSibling;
+
+                    // Récupérez la valeur de localisation à partir de l'élément
+                    const localisation = localisationElement.textContent;
+
+                    // Affichez la valeur de localisation dans la console ou faites ce que vous voulez avec elle
+                    console.log('Localisation:', localisation);
+                });
+            });
+
+
+            if (pharmacyData) {
+                // Affichez les informations de pharmacie
+                const pharmacyInfo = pharmacyData['Informations'];
+                let pharmacyHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pharmacie</th>
+                        <th>phone 1</th>
+                        <th>phone 2</th>
+                        <th>phone 3</th>
+                        <th>Localisation</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+
+                pharmacyInfo.forEach(function (info) {
+                    pharmacyHTML += `
+            <tr>
+                <td>${info.pharmacie}</td>
+                <td style='font-size: 12px;'><a href="tel:${info.telephone1}">${info.telephone1}</a></td>
+                <td style='font-size: 12px;'><a href="tel:${info.telephone2}">${info.telephone2}</a></td>
+                <td style='font-size: 12px;'><a href="tel:${info.telephone3}">${info.telephone3}</a></td>
+                <td>
+                    <i class="fa-solid fa-map-location-dot localisation" style='cursor: pointer; font-size:18px; color: rgb(10, 58, 248)' ></i>
+                    <span class="hidden localisation local" style="cursor: pointer; color: rgb(10, 58, 248);"><p style='font-size:11px;'>${info.localisation}</p></span>
+                </td>
+            </tr>
+            
+            `;
+                });
+
+                pharmacyHTML += `
+                </tbody>
+             </table>
+             `;
+
+
+                // Placez le contenu HTML généré dans un élément de votre page HTML où vous souhaitez afficher les informations
+                document.getElementById('pharmacyData').innerHTML = pharmacyHTML;
+                const icons = document.querySelectorAll('.fa-map-location-dot');
+
+
+
+
+                // Ajoutez un gestionnaire d'événements de clic à chaque icône
+                icons.forEach(function (icon) {
+
+                    icon.style.padding = '7px 60px';
+                    icon.classList.toggle('my-icon');
+                    icon.addEventListener('click', function () {
+                        // Trouvez l'élément de localisation associé
+                        const prenomValue = document.querySelector('#prenom').textContent.trim(); // Assurez-vous d'ajuster le sélecteur en fonction de votre structure HTML
+                        if (prenomValue === '') {
+                            // Le champ prenom est vide, affichez la boîte de dialogue modale en utilisant Bootstrap
+                            $('#inscriptionModal').modal('show');
+                        }
+                        else {
+
+                            var localisationElement = icon.nextElementSibling;
+
+                            var itineraireInput = document.querySelector('input[placeholder="End"]');
+                            // Vérifiez si l'élément est déjà visible
+                            var isVisible = !localisationElement.classList.contains('hidden');
+
+                            // Si l'élément est visible, masquez-le ; sinon, affichez-le
+                            if (isVisible) {
+                                localisationElement.classList.add('hidden');
+                            } else {
+                                localisationElement.classList.remove('hidden');
+                                var localisationValue = localisationElement.textContent.trim();
+                                itineraireInput.value = localisationValue;
+
+                            }
+                        };
+                    });
+                });
+
+
+            } else {
+                // Aucune pharmacie trouvée pour la plage de dates sélectionnée
+                document.getElementById('pharmacyData').innerHTML = 'Aucune pharmacie trouvée pour la date sélectionnée.';
+            }
+        };
+        // Fonction pour formater le jour avec un zéro devant s'il est inférieur à 10
+        function formatDay(day) {
+            return day < 10 ? `0${day}` : day.toString();
+        }
+
+        // Fonction pour obtenir le nom du jour de la semaine à partir de la date
+        function getDayOfWeek(year, month, day) {
+            const date = new Date(year, month - 1, day);
+            const options = { weekday: 'short' };
+            let dayOfWeek = date.toLocaleDateString('fr-FR', options);
+            // Mettre la première lettre en majuscule
+            dayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
+            return dayOfWeek;
+        };
+
+        // Fonction pour obtenir le nom du mois à partir du numéro de mois
+        function getMonthName(month) {
+            const monthNames = [
+                'Janv.', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin',
+                'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'
+            ];
+            return monthNames[month - 1];
+        };
+
+    </script>
+
+    <script>
+
+        let macarte = L.map('carte').setView([3.848, 11.502], 11);
+        var standardLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>',
+            minZoom: 1,
+            maxZoom: 200,
+            position: 'topright',
+        }).addTo(macarte);
+        var satelliteLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>',
+            minZoom: 1,
+            maxZoom: 200,
+            position: 'topright',
+        }).addTo(macarte);
+
+        // var satelliteLayer = L.tileLayer('https://tiles.mapquestapi.com/sat/{z}/{x}/{y}?key="n4A62OJbrYpoUjS6b1rxKfXRPY3AU51R"', {
+        // attribution: 'Tiles &copy; <a href="https://www.mapquest.com/">MapQuest</a>',
+        // maxZoom: 18,
+        // });
+        standardLayer.addTo(macarte);
+        var baseLayers = {
+            "Carte standard": standardLayer,
+            "Satellite": satelliteLayer
+        };
+
+        L.control.layers(baseLayers).addTo(macarte);
+        L.control.scale().addTo(macarte);
+
+
+        // var mousePositionControl = L.control.mousePosition();
+        // mousePositionControl.addTo(macarte);
+
+        var geocoder = L.Control.Geocoder.nominatim();
+        var searchControl = L.Control.geocoder({
+            geocoder: geocoder,
+            collapsed: true,
+            placeholder: "Entrez le nom du lieu",
+            showResultIcons: true,
+            suggestMinLength: 4,
+
+        }).addTo(macarte);
+        var locateControl = L.control.locate({
+            position: 'topleft',
+            drawCircle: true,
+            follow: true,
+            // setView: 'always',
+            setView: true,
+            keepCurrentZoomLevel: false,
+            markerStyle: {
+                color: 'blue',
+                opacity: 0.7,
+
+            },
+            circleStyle: {
+                fillColor: '#007bff',
+                fillOpacity: 0.2,
+                stroke: false,
+            },
+            position: 'topright',
+            metric: false,
+            onLocationError: function (err) {
+                alert("Erreur de localisation : " + err.message);
+            },
+            onLocationOutsideMapBounds: function (context) {
+                alert("Vous êtes en dehors des limites de la carte.");
+            },
+            popupText: 'Vous êtes ici!',
+            locateOptions: {
+                maxZoom: 200, // Définir le niveau de zoom maximal
+            }
+        }).addTo(macarte);
+        // locateControl.start();
+
+        var osm2 = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { minZoom: 0, maxZoom: 13 });
+        var miniMap = new L.Control.MiniMap(osm2, {
+            toggleDisplay:
+                true
+        }).addTo(macarte);
+
+        let routingControl;
+        let routingInfoControl;
+        function removeRoutingControl() {
+            if (routingControl) {
+                macarte.removeControl(routingControl);
+                routingControl = null;
+            }
+            if (routingInfoControl) {
+                macarte.removeControl(routingInfoControl);
+                routingInfoControl = null;
+            }
+        }
+
+        // Ajoutez un gestionnaire d'événement pour le clic sur le bouton d'itinéraire
+        document.getElementById('itineraire-button').addEventListener('click', function () {
+            // Supprimez le contrôle d'itinéraire existant et les informations d'itinéraire s'ils existent
+            removeRoutingControl();
+
+
+            // Créez un nouveau contrôle d'itinéraire avec des classes CSS personnalisées
+            routingControl = L.Routing.control({
+                lineOptions: {
+                    styles: [{ color: 'blue', opacity: 0.5, weight: 7 }]
+                },
+                router: new L.Routing.osrmv1({
+                    language: 'fr',
+                    profile: 'car', // car, bike, foot
+                }),
+                geocoder: L.Control.Geocoder.nominatim(),
+                position: 'topleft',
+
+                routeWhileDragging: true,
+            }).addTo(macarte);
+
+            // Appliquez la classe CSS personnalisée au bouton d'itinéraire
+            document.getElementById('itineraire-button').classList.add('my-routing-button');
+            // Créez un bouton pour fermer les informations d'itinéraire avec une classe CSS personnalisée
+            routingInfoControl = L.control({ position: 'topleft' });
+            routingInfoControl.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom my-routing-control');
+                div.innerHTML = '<a href="#" onclick="removeRoutingControl();" title="Close"><i class="fa-solid fa-times"></i></a>';
+
+                return div;
+            };
+
+            routingInfoControl.addTo(macarte);
+
+
+            // Sélectionnez les éléments "start" et "end" par leur classe
+            var startInput = document.querySelector('.leaflet-routing-geocoder');
+            var endInput = document.querySelector('.leaflet-routing-geocoders .leaflet-routing-geocoder:nth-child(2)');
+
+            // Fonction pour créer un élément <i> contenant l'icône Font Awesome
+            function createFontAwesomeIcon(className) {
+                var iconElement = document.createElement('i');
+                iconElement.className = className;
+                return iconElement;
+            }
+            // Ajoutez la classe CSS personnalisée au champ "start"
+            if (startInput) {
+                startInput.classList.add('my-routing-start');
+            }
+            // Ajoutez l'icône Font Awesome au champ "start"
+            if (startInput) {
+                var startIcon = createFontAwesomeIcon('fas fa-map-marker-alt'); // Remplacez par l'icône souhaitée
+                startInput.insertBefore(startIcon, startInput.firstChild);
+            }
+
+            // Vérifiez si l'élément a été trouvé
+            if (endInput) {
+                endInput.classList.add('leaflet-routing-geocoder');
+            }
+
+            // Ajoutez l'icône Font Awesome au champ "end"
+            if (endInput) {
+                var endIcon = createFontAwesomeIcon('fas fa-map-marker-alt'); // Remplacez par l'icône souhaitée
+                endInput.insertBefore(endIcon, endInput.firstChild);
+            }
+
+
+
+            // Sélectionnez l'élément input avec l'attribut placeholder="Start"
+            var startInput = document.querySelector('input[placeholder="Start"]');
+
+            // Vérifiez si l'élément a été trouvé
+            if (startInput) {
+                startInput.classList.add('my-routing-start');
+            }
+            var startInput = document.querySelector('input[placeholder="End"]');
+
+            // Sélectionnez le bouton "Ajouter un point de passage" par sa classe CSS
+            var addButton = document.querySelector('.leaflet-routing-add-waypoint');
+
+            // Vérifiez si le bouton existe avant de le supprimer
+            if (addButton) {
+                addButton.remove(); // Supprimez le bouton du DOM
+            }
+
+
+            function addClearIcon(input) {
+                // Créez l'icône de suppression
+                var clearIcon = document.createElement('i');
+                clearIcon.className = 'fas fa-times clear-icon'; // Ajoutez des classes pour l'icône
+                clearIcon.style.visibility = 'hidden'; // Rendre l'icône invisible par défaut
+
+                // Écoutez l'événement "input" sur le champ input
+                input.addEventListener('input', function () {
+                    // Affichez l'icône de suppression si le champ contient du texte, sinon masquez-la
+                    if (input.value.length > 0) {
+                        clearIcon.style.visibility = 'visible';
+                    } else {
+                        clearIcon.style.visibility = 'hidden';
+                    }
+                });
+
+                // Écoutez l'événement de clic sur l'icône de suppression
+                clearIcon.addEventListener('click', function () {
+                    input.value = ''; // Effacez le texte du champ input
+                    clearIcon.style.visibility = 'hidden'; // Masquez l'icône de suppression
+                });
+
+                // Ajoutez l'icône de suppression à la fin du parent du champ input
+                input.parentNode.appendChild(clearIcon);
+            }
+
+            // Sélectionnez la première div avec la classe "leaflet-routing-geocoder" dans le DOM
+            var firstGeocoderDiv = document.querySelector('.leaflet-routing-geocoders ');
+
+            // Créez un élément d'annonce
+            var announcementDiv = document.createElement('div');
+            announcementDiv.className = 'announcement'; // Ajoutez une classe CSS personnalisée pour le style
+
+            // Créez une icône FontAwesome et ajoutez-la à l'annonce
+            var icon = document.createElement('i');
+            icon.className = 'fas fa-info-circle'; // Utilisez l'icône FontAwesome de votre choix, par exemple "info-circle"
+            icon.style.color = 'orange'; // Définissez la couleur de l'icône (par exemple, bleu)
+            icon.style.fontSize = '25px'; // Définissez la couleur de l'icône (par exemple, bleu)
+            icon.style.paddingRight = '10px'; // Définissez la couleur de l'icône (par exemple, bleu)
+            announcementDiv.appendChild(icon);
+
+            // Ajoutez le texte de l'annonce
+            var text = document.createTextNode('Vous devez cliquer sur le bouton "Entrée" du clavier lorsque le champ est rempli.');
+            announcementDiv.appendChild(text);
+            // Ajoutez des styles CSS à l'annonce
+            announcementDiv.style.backgroundColor = 'rgba(242, 242, 242, 0.2)'; // Couleur de fond
+
+            announcementDiv.style.padding = '15px'; // Espacement intérieur
+            announcementDiv.style.border = '1px solid #ccc'; // Bordure
+            announcementDiv.style.display = 'flex'; // Utilisez Flexbox pour aligner l'icône et le texte
+
+            // Insérez l'annonce juste avant la première div "leaflet-routing-geocoder"
+            firstGeocoderDiv.parentNode.insertBefore(announcementDiv, firstGeocoderDiv);
+
+
+            // Sélectionnez tous les champs input
+            var inputFields = document.querySelectorAll('.leaflet-routing-geocoder input');
+
+            // Pour chaque champ input
+            inputFields.forEach(function (input) {
+                addClearIcon(input);
+            });
+
+            localStorage.removeItem('lat');
+            localStorage.removeItem('lon');
+            localStorage.removeItem('result.center.lat');
+            localStorage.removeItem('result.center.lng');
+
+            // Fonction pour créer des suggestions pour un champ d'entrée donné
+            function createSuggestionsForInput(inputElement) {
+                var geocoder = L.Control.Geocoder.nominatim();
+                var suggestionsContainer = document.createElement('div');
+                suggestionsContainer.className = 'suggestions';
+                inputElement.addEventListener('input', function () {
+                    var userInput = inputElement.value.trim();
+
+                    if (userInput.length >= -1) {
+                        geocoder.geocode(userInput, function (results) {
+                            suggestionsContainer.innerHTML = '';
+                            var currentPositionOption = document.createElement('div');
+                            currentPositionOption.classList.add('suggestion', 'current-position');
+                            currentPositionOption.innerHTML = '<div class = "position"><i class="fa-solid fa-location-crosshairs" style="font-size = 14px; color"></i><span style="color:bleu;"> Votre position</span></div>';
+
+                            currentPositionOption.addEventListener('click', function () {
+
+
+                                if ("geolocation" in navigator) {
+                                    navigator.geolocation.getCurrentPosition(function (position) {
+                                        lat = position.coords.latitude;
+                                        lon = position.coords.longitude;
+                                        // Créez un style de marqueur pour le champ "start"
+                                        var startMarkerStyle = {
+                                            icon: L.divIcon({
+                                                className: 'custom-icon',
+                                                html: '<i class="fa-solid fa-map-pin start leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable" style="color: green; font-size: 30px; font-weight:bold;"></i>', // Icône FontAwesome
+                                            }),
+                                        };
+
+                                        // Créez un style de marqueur pour le champ "end"
+                                        var endMarkerStyle = {
+                                            icon: L.divIcon({
+                                                className: 'custom-icon',
+                                                html: '<i class="fa-solid fa-map-pin end leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable" style="color:red; font-size: 30px; font-weight:bold;"></i>', // Icône FontAwesome
+                                            }),
+                                        };
+
+                                        var suggestions = document.querySelectorAll('.suggestion');
+
+                                        // Parcourez chaque suggestion
+                                        suggestions.forEach(function (suggestion) {
+
+                                            // Obtenez l'élément parent de la suggestion (div avec la classe "leaflet-routing-geocoder")
+                                            var parentGeocoder = suggestion.closest('.leaflet-routing-geocoder');
+
+                                            // Vérifiez si la suggestion est associée au champ "Start" ou "End" en fonction du placeholder de l'élément parent
+                                            if (parentGeocoder) {
+
+                                                var input = parentGeocoder.querySelector('input'); // Sélectionnez l'élément <input> dans le parent
+                                                var placeholder = input.getAttribute('placeholder');
+
+                                                if (placeholder === 'Start') {
+                                                    // Cette suggestion est associée au champ "Start"
+                                                    // Vous pouvez maintenant ajouter un marqueur pour le champ "Start" ici
+                                                    //console.log('Ceci est associé au champ "Start"');
+                                                    function supprimerElementsI() {
+                                                        // Sélectionnez la div parent avec la classe "leaflet-marker-pane"
+                                                        var parentElement = document.querySelectorAll('.leaflet-pane.leaflet-marker-pane .leaflet-marker-icon');
+                                                        parentElement.forEach(function (icon) {
+                                                            // Sélectionnez tous les éléments <i> à l'intérieur des éléments <div> avec la classe "leaflet-marker-icon"
+                                                            var iconElements = parentElement.querySelectorAll('i.fa-map-pin.start');
+                                                            if (iconElements) {
+
+                                                                // Parcourez tous les éléments <i> sélectionnés et supprimez-les
+                                                                iconElements.forEach(function (iconElement) {
+                                                                    iconElement.remove();
+                                                                });
+                                                            }
+                                                        });
+                                                    }
+
+                                                    // Appelez la fonction lorsque vous souhaitez supprimer les éléments <i>
+                                                    supprimerElementsI();
+
+
+                                                    // Effectuez une requête de géocodage inversé avec Nominatim
+                                                    const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+
+                                                    fetch(reverseGeocodeUrl)
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            // Le nom du lieu se trouve dans la propriété "display_name" des résultats
+                                                            const placeName = data.display_name;
+                                                            inputElement.value = placeName;
+                                                            // console.log(`Le nom du lieu est : ${placeName}`);
+                                                        })
+                                                        .catch(error => {
+                                                            //console.error('Erreur lors du géocodage inversé :', error);
+                                                        });
+
+                                                    suggestionsContainer.style.display = 'none';
+                                                    //localStorage.setItem('lat', lat);
+                                                    //localStorage.setItem('lon', lon);
+                                                    var markers = L.marker([lat, lon], startMarkerStyle).addTo(macarte);
+                                                    macarte.setView([lat, lon], 13);
+
+
+
+                                                } else if (placeholder === 'End') {
+                                                    // Cette suggestion est associée au champ "End"
+                                                    // Utilisez setTimeout pour attendre que la page soit entièrement chargée
+                                                    function supprimerElementsI() {
+                                                        // Sélectionnez la div parent avec la classe "leaflet-marker-pane"
+                                                        var parentElement = document.querySelectorAll('.leaflet-pane.leaflet-marker-pane .leaflet-marker-icon');
+                                                        parentElement.forEach(function (icon) {
+                                                            // Sélectionnez tous les éléments <i> à l'intérieur des éléments <div> avec la classe "leaflet-marker-icon"
+                                                            var iconElements = parentElement.querySelectorAll('i.fa-map-pin.start');
+                                                            if (iconElements) {
+
+                                                                // Parcourez tous les éléments <i> sélectionnés et supprimez-les
+                                                                iconElements.forEach(function (iconElement) {
+                                                                    iconElement.remove();
+                                                                });
+                                                            }
+                                                        });
+                                                    }
+
+                                                    // Appelez la fonction lorsque vous souhaitez supprimer les éléments <i>
+                                                    supprimerElementsI();
+
+                                                    // Appelez la fonction lorsque vous souhaitez supprimer les éléments <i>
+                                                    supprimerElementsI();
+
+                                                    var markers = L.marker([lat, lon], endMarkerStyle).addTo(macarte);
+                                                    macarte.setView([lat, lon], 13);
+                                                    // Effectuez une requête de géocodage inversé avec Nominatim
+                                                    const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+
+                                                    fetch(reverseGeocodeUrl)
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            // Le nom du lieu se trouve dans la propriété "display_name" des résultats
+                                                            const placeName = data.display_name;
+                                                            inputElement.value = placeName;
+                                                            //console.log(`Le nom du lieu est : ${placeName}`);
+                                                        })
+                                                        .catch(error => {
+                                                            //console.error('Erreur lors du géocodage inversé :', error);
+                                                        });
+                                                    suggestionsContainer.style.display = 'none';
+                                                    // localStorage.setItem('lat', lat);
+                                                    // localStorage.setItem('lon', lon);
+                                                    //console.log('Ceci est associé au champ "End"');
+
+                                                }
+                                            }
+                                        });
+                                        // alert('Votre position actuelle : Latitude ' + lat + ', Longitude ' + lon);
+
+                                        // Réactivez le gestionnaire d'événements click de la carte
+                                        mapClicked = false;
+                                    });
+                                } else {
+                                    alert("La géolocalisation n'est pas disponible dans ce navigateur.");
+                                }
+                            });
+
+
+                            suggestionsContainer.appendChild(currentPositionOption);
+
+                            results.forEach(function (result) {
+                                var suggestion = document.createElement('div');
+                                suggestion.classList.add('suggestion');
+                                suggestion.textContent = result.name;
+                                suggestion.addEventListener('click', function () {
+
+                                    var startMarkerStyle = {
+                                        icon: L.divIcon({
+                                            className: 'custom-icon',
+                                            html: '<i class="fa-solid fa-map-pin start leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable" style="color: green; font-size: 30px; font-weight:bold;"></i>', // Icône FontAwesome
+                                        }),
+                                    };
+
+                                    // Créez un style de marqueur pour le champ "end"
+                                    var endMarkerStyle = {
+                                        icon: L.divIcon({
+                                            className: 'custom-icon',
+                                            html: '<i class="fa-solid fa-map-pin end leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable" style="color:red; font-size: 30px; font-weight:bold;"></i>', // Icône FontAwesome
+                                        }),
+                                    };
+                                    var suggestions = document.querySelectorAll('.suggestion');
+
+                                    // Parcourez chaque suggestion
+                                    suggestions.forEach(function (suggestion) {
+                                        // Obtenez l'élément parent de la suggestion (div avec la classe "leaflet-routing-geocoder")
+                                        var parentGeocoder = suggestion.closest('.leaflet-routing-geocoder');
+
+                                        // Vérifiez si la suggestion est associée au champ "Start" ou "End" en fonction du placeholder de l'élément parent
+                                        if (parentGeocoder) {
+                                            var input = parentGeocoder.querySelector('input'); // Sélectionnez l'élément <input> dans le parent
+                                            var placeholder = input.getAttribute('placeholder');
+
+                                            if (placeholder === 'Start') {
+                                                // Cette suggestion est associée au champ "Start"
+                                                // Vous pouvez maintenant ajouter un marqueur pour le champ "Start" ici
+                                                //console.log('Ceci est associé au champ "Start"');
+                                                inputElement.value = result.name;
+
+                                                // Effacez les suggestions après avoir cliqué sur une suggestion
+                                                suggestionsContainer.style.display = 'none';
+                                                // localStorage.setItem('result.center.lat', result.center.lat);
+                                                // localStorage.setItem('result.center.lng', result.center.lng);
+                                                function supprimerElementsIi() {
+                                                    // Sélectionnez la div parent avec la classe "leaflet-marker-pane"
+                                                    var parentElement = document.querySelectorAll('.leaflet-pane.leaflet-marker-pane .leaflet-marker-icon');
+                                                    parentElement.forEach(function (icon) {
+                                                        // Sélectionnez tous les éléments <i> à l'intérieur des éléments <div> avec la classe "leaflet-marker-icon"
+                                                        var iconElements = icon.querySelectorAll('i.fa-map-pin.start');
+
+                                                        // Parcourez tous les éléments <i> sélectionnés et supprimez-les
+                                                        iconElements.forEach(function (iconElement) {
+                                                            iconElement.remove();
+                                                        });
+                                                    });
+                                                }
+
+                                                // Appelez la fonction lorsque vous souhaitez supprimer les éléments <i>
+                                                supprimerElementsIi();
+                                                var markers = L.marker([result.center.lat, result.center.lng], startMarkerStyle).addTo(macarte);
+                                            } else if (placeholder === 'End') {
+                                                // Cette suggestion est associée au champ "End"
+                                                // Vous pouvez maintenant ajouter un marqueur pour le champ "End" ici
+                                                inputElement.value = result.name;
+
+                                                // Effacez les suggestions après avoir cliqué sur une suggestion
+                                                suggestionsContainer.style.display = 'none';
+                                                function supprimerElementsI() {
+                                                    // Sélectionnez la div parent avec la classe "leaflet-marker-pane"
+                                                    var parentElement = document.querySelectorAll('.leaflet-pane.leaflet-marker-pane .leaflet-marker-icon');
+                                                    parentElement.forEach(function (icon) {
+                                                        // Sélectionnez tous les éléments <i> à l'intérieur des éléments <div> avec la classe "leaflet-marker-icon"
+                                                        var iconElements = icon.querySelectorAll('i.fa-map-pin.end');
+
+                                                        // Parcourez tous les éléments <i> sélectionnés et supprimez-les
+                                                        iconElements.forEach(function (iconElement) {
+                                                            iconElement.remove();
+                                                        });
+                                                    });
+                                                }
+
+                                                // Appelez la fonction lorsque vous souhaitez supprimer les éléments <i>
+                                                supprimerElementsI();
+
+                                                var markers = L.marker([result.center.lat, result.center.lng], endMarkerStyle).addTo(macarte);
+                                                // console.log('Ceci est associé au champ "End"');
+                                            }
+                                        }
+                                    });
+
+                                    //localStorage.setItem('result.center.lat', result.center.lat);
+                                    //localStorage.setItem('result.center.lng', result.center.lng);
+                                    //alert('Votre position actuelle : Latitude ' + result.center.lat + ', Longitude ' + result.center.lng);
+                                    // Optionnel : Vous pouvez également centrer la carte sur la suggestion si nécessaire
+                                    macarte.setView([result.center.lat, result.center.lng], 13);
+
+                                    //alert('Vous avez sélectionné : ' + result.name);
+                                });
+                                suggestionsContainer.appendChild(suggestion);
+                            });
+
+                            suggestionsContainer.style.display = 'block';
+                        });
+                    } else {
+                        suggestionsContainer.style.display = 'none';
+                    }
+
+                });
+
+                inputElement.parentNode.insertBefore(suggestionsContainer, inputElement.nextSibling);
+
+            }
+
+            // supr icones
+            var icartes = document.querySelectorAll('.fa-solid.fa-map-pin'); // Utilisez le sélecteur correct avec "." pour chaque classe
+            icartes.forEach(function (icone) {
+                icone.style.display = 'none';
+            });
+
+            // Sélectionnez tous les champs d'entrée et créez des suggestions pour chacun d'eux
+            var inputFields = document.querySelectorAll('.leaflet-routing-geocoders .leaflet-routing-geocoder input');
+            inputFields.forEach(function (input) {
+                createSuggestionsForInput(input);
+
+            });
+            //var startCoords = [localStorage.getItem('lat'), localStorage.getItem('lon')]; // Coordonnées de la position actuelle
+            //var endCoords = [localStorage.getItem('result.center.lat'), localStorage.getItem('result.center.lng')]; // Coordonnées du lieu de destination
+
+            //routingControll.setWaypoints([L.latLng(startCoords[0], startCoords[1]), L.latLng(endCoords[0], endCoords[1])]).addTo(macarte); // Le premier argument (null) indique de conserver le point de départ actuel
+            //routingControl.setWaypoints([L.latLng(startCoords[0], startCoords[1]), L.latLng(endCoords[0], endCoords[1])]).addTo(macarte); // Le premier argument (null) indique de conserver le point de départ actuel
+
+
+        });
+
+
+
+
+
+
+
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </body>
 
 </html>

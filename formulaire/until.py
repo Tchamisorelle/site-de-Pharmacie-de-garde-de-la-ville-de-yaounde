@@ -5,7 +5,7 @@ from decouple import config
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
-def send_notification_email(subject, message, recipient_list, attachment_paths):
+def send_notification_email(subject, message, recipient_list):
     # Charger les variables d'environnement
     email_password = config('EMAIL_HOST_PASSWORD') 
     from_email = config('EMAIL_HOST_USER')
@@ -28,7 +28,7 @@ def send_notification_email(subject, message, recipient_list, attachment_paths):
     email = EmailMultiAlternatives(
         subject=subject,
         body=text_content,
-        from_email=from_email,
+        from_email="pharma.prjt.yde <'pharma.prjt.yde@gmail.com'",
         to=recipient_list,
     ) 
     email.attach_alternative(html_content, "text/html")
@@ -59,8 +59,8 @@ def send_notification_email(subject, message, recipient_list, attachment_paths):
     # email.attach_alternative(html_content, "text/html")
     
 
-    for attachment_path in attachment_paths:
-        email.attach_file(attachment_path)
+    #for attachment_path in attachment_paths:
+     #   email.attach_file(attachment_path)
 
     email.send(fail_silently=False)
 
