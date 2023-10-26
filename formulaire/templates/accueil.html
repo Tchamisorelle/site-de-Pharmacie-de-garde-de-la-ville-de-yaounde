@@ -269,12 +269,20 @@
             border-bottom: 2px solid #ccc;
             /* Ajoutez une bordure inférieure */
         }
+        #pharmacyData th:hover{
+            color: #0056b3;
+            background-color: #404141;
+        }
 
         /* Style pour les lignes de la table */
         #pharmacyData td {
             padding: 4px;
             border-bottom: 1px solid #ccc;
             font-size: 12px;
+        }
+        #pharmacyData td:hover {
+            color: #0056b3;
+            background-color: #c4d8ed;
         }
 
         /* Style pour les liens téléphoniques */
@@ -592,7 +600,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-8 col-xs-4 col-sm-4" style="background-color:  #f0f8f9">
+                <div class="col-xl-4 col-lg-4 col-md-8 col-xs-4 col-sm-4" style="background-color:  #f0f0f0e1">
                     <h6 id="toggle-profile" style="margin-right: 10px; margin-top: 10px; margin-bottom: 0px;"
                         data-toggle="modal" data-target="#myModal">
                         <i class="fas fa-user" title="Profil {{ email }}"
@@ -672,7 +680,7 @@
                                 </div>
                             </div>
 
-                            <div id="currentDateElement" style="background-color: rgba(149, 251, 188, 0.226);"></div> <!-- L'élément pour afficher la date actuelle -->
+                            <div id="currentDateElement" style="background-color: rgba(212, 242, 203, 0.969);"></div> <!-- L'élément pour afficher la date actuelle -->
 
                             <div id="pharmacyData">
                                 <!-- Les informations de la pharmacie seront affichées ici -->
@@ -682,7 +690,7 @@
                         </div>
                     </center>
                     <div class="fixed-div">
-                        <span style="background-color: none; opacity: 0.7;">
+                        <span style="background-color: none; opacity: 0,9;">
                             <a href="#" style="color: #000000; font-size: 12px;">A propos | </a>
                             <a href="suggestion" id="suggestion-link" style="cursor: pointer; color: #000000; font-size: 12px;" data-toggle="modal"
                                 data-target="#suggestion">Suggestion |</a>
@@ -813,31 +821,50 @@
         });
 
         function searchPharmacy1() {
-            const selectedDate = new Date(); // Récupérez la date sélectionnée par l'utilisateur
-            const year = selectedDate.getFullYear();
+            let selectedDate = new Date(); // Récupérez la date sélectionnée par l'utilisateur
+            let year = selectedDate.getFullYear();
             // JavaScript commence les mois à partir de 0, alors ajoutez 1 au mois
-            const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
-            const day = selectedDate.getDate().toString().padStart(2, '0');
+            let month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+            let day = selectedDate.getDate().toString().padStart(2, '0');
 
             // Formatez la date au format "YYYY-MM-DD"
-            const formattedDate = `${year}-${month}-${day}`;
-
-            // formattedDate contient maintenant la date au format "YYYY-MM-DD"
-            // console.log(formattedDate);
-            
+            let formattedDate = `${year}-${month}-${day}`;
             
             // Créez la date au format souhaité (par exemple, 'Jeu. 02 Nov. 2023 à 8h')
-            const formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
+            let formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
 
             // Créez la date du jour suivant à 8h en ajoutant 1 jour à la date sélectionnée
-            const selectedDateObj = new Date(year, month - 1, day, 8);
+            let selectedDateObj = new Date(year, month - 1, day, 8);
             // Vérifiez le jour de la semaine
-            const dayOfWeek = selectedDateObj.getDay();
+            let dayOfWeek = selectedDateObj.getDay();
 
             // Si le jour est un samedi (6), ajoutez 2 jours
-            if (dayOfWeek === 6) {
+            if (dayOfWeek === 6 ) {
                 selectedDateObj.setDate(selectedDateObj.getDate() + 2);
-            } else {
+            }
+            else if (dayOfWeek === 0) {
+                selectedDate.setDate(selectedDate.getDate() - 1); // Remplacez la date du dimanche par celle du samedi (jour 6)
+    
+                // Vérifiez si la date est devenue négative
+                if (selectedDate.getDate() === 0) {
+                    // Si la date est devenue 0, cela signifie que nous étions au début du mois
+                    // Dans ce cas, ajustez la date au dernier jour du mois précédent
+                    selectedDate.setMonth(selectedDate.getMonth() - 1);
+                    selectedDate.setDate(getLastDayOfMonth(selectedDate.getFullYear(), selectedDate.getMonth() + 1));
+                }
+                year = selectedDate.getFullYear();
+                // JavaScript commence les mois à partir de 0, alors ajoutez 1 au mois
+                month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                day = selectedDate.getDate().toString().padStart(2, '0');
+
+                // Formatez la date au format "YYYY-MM-DD"
+                formattedDate = `${year}-${month}-${day}`;
+                // Créez la date au format souhaité (par exemple, 'Jeu. 02 Nov. 2023 à 8h')
+                formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
+                selectedDateObj = new Date(year, month - 1, day, 8);
+                selectedDateObj.setDate(selectedDateObj.getDate() + 2);
+
+            }  else {
                 // Sinon, ajoutez 1 jour
                 selectedDateObj.setDate(selectedDateObj.getDate() + 1);
             }
@@ -883,12 +910,12 @@
                 const pharmacyInfo = pharmacyData['Informations'];
                 let pharmacyHTML = `
             <table>
-                <thead>
+                <thead >
                     <tr>
                         <th>Pharmacie</th>
-                        <th>phone 1</th>
-                        <th>phone 2</th>
-                        <th>phone 3</th>
+                        <th>Téléphone1</th>
+                        <th>Téléphone2</th>
+                        
                         <th>Localisation</th>
                     </tr>
                 </thead>
@@ -901,7 +928,6 @@
                 <td>${info.pharmacie}</td>
                 <td style='font-size: 12px;'><a href="tel:${info.telephone1}">${info.telephone1}</a></td>
                 <td style='font-size: 12px;'><a href="tel:${info.telephone2}">${info.telephone2}</a></td>
-                <td style='font-size: 12px;'><a href="tel:${info.telephone3}">${info.telephone3}</a></td>
                 <td>
                     <i class="fa-solid fa-map-location-dot localisation" style='cursor: pointer; font-size:18px; color: rgb(10, 58, 248)' ></i>
                     <span class="hidden localisation local" style="cursor: pointer; color: rgb(10, 58, 248);"><p style='font-size:11px;'>${info.localisation}</p></span>
@@ -972,25 +998,48 @@
         // La fonction searchPharmacy() sera désormais appelée lorsque la date est modifiée
 
         function searchPharmacy() {
-            const selectedDate = document.getElementById('datePicker').value; // Récupérez la date sélectionnée par l'utilisateur
-            const dateParts = selectedDate.split('-'); // Séparez la date en année, mois et jour
+            let selectedDate = document.getElementById('datePicker').value; // Récupérez la date sélectionnée par l'utilisateur
+            let dateParts = selectedDate.split('-'); // Séparez la date en année, mois et jour
             // console.log(selectedDate);
-            const year = dateParts[0];
-            const month = dateParts[1];
-            const day = dateParts[2];
+            let year = parseInt(dateParts[0], 10); // Convertissez les parties de la date en nombres entiers
+            let month = parseInt(dateParts[1], 10);
+            let day = parseInt(dateParts[2], 10);
             
             // Créez la date au format souhaité (par exemple, 'Jeu. 02 Nov. 2023 à 8h')
-            const formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
+            let formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
 
             // Créez la date du jour suivant à 8h en ajoutant 1 jour à la date sélectionnée
-            const selectedDateObj = new Date(year, month - 1, day, 8);
+            let selectedDateObj = new Date(year, month - 1, day, 8);
             // Vérifiez le jour de la semaine
-            const dayOfWeek = selectedDateObj.getDay();
+            let dayOfWeek = selectedDateObj.getDay();
+            
+            function getLastDayOfMonth(year, month) {
+                return new Date(year, month, 0).getDate();
+            }
+
 
             // Si le jour est un samedi (6), ajoutez 2 jours
             if (dayOfWeek === 6) {
                 selectedDateObj.setDate(selectedDateObj.getDate() + 2);
-            } else {
+            } 
+            else if (dayOfWeek === 0) {
+                day = day - 1; // Remplacez la date du dimanche par celle du samedi (jour 6)
+    
+                // Vérifiez si la date est devenue négative
+                if (day === 0) {
+                    // Si la date est devenue 0, cela signifie que nous étions au début du mois
+                    // Dans ce cas, ajustez la date au dernier jour du mois précédent
+                    month = month - 1;
+                    day = getLastDayOfMonth(year, month);
+                }
+                let formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+                // Créez la date au format souhaité (par exemple, 'Jeu. 02 Nov. 2023 à 8h')
+                formattedSelectedDate = `${getDayOfWeek(year, month, day)} ${day} ${getMonthName(month)} ${year} à 8h`;
+                selectedDateObj = new Date(year, month - 1, day, 8);
+                selectedDateObj.setDate(selectedDateObj.getDate() + 2);
+
+            }else {
                 // Sinon, ajoutez 1 jour
                 selectedDateObj.setDate(selectedDateObj.getDate() + 1);
             }
@@ -1039,9 +1088,9 @@
                 <thead>
                     <tr>
                         <th>Pharmacie</th>
-                        <th>phone 1</th>
-                        <th>phone 2</th>
-                        <th>phone 3</th>
+                        <th>Téléphone1</th>
+                        <th>Téléphone2</th>
+                        
                         <th>Localisation</th>
                     </tr>
                 </thead>
@@ -1054,7 +1103,6 @@
                 <td>${info.pharmacie}</td>
                 <td style='font-size: 12px;'><a href="tel:${info.telephone1}">${info.telephone1}</a></td>
                 <td style='font-size: 12px;'><a href="tel:${info.telephone2}">${info.telephone2}</a></td>
-                <td style='font-size: 12px;'><a href="tel:${info.telephone3}">${info.telephone3}</a></td>
                 <td>
                     <i class="fa-solid fa-map-location-dot localisation" style='cursor: pointer; font-size:18px; color: rgb(10, 58, 248)' ></i>
                     <span class="hidden localisation local" style="cursor: pointer; color: rgb(10, 58, 248);"><p style='font-size:11px;'>${info.localisation}</p></span>

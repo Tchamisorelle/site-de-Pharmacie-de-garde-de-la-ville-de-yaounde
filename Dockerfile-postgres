@@ -1,0 +1,7 @@
+# Utilisez une image PostgreSQL officielle
+FROM postgres:latest
+
+# Exemple : définissez un utilisateur et un mot de passe pour votre base de données
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD postgres
+

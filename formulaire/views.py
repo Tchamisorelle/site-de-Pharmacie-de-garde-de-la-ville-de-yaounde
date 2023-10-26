@@ -30,10 +30,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 # from django.contrib.auth import authenticate, login
-import pandas as pd
-from datetime import datetime
 from django.http import JsonResponse
-import json
 from django.contrib.auth import logout
 
 
@@ -207,7 +204,7 @@ def reset_password_request(request):
             email = EmailMultiAlternatives(
                 subject=mail_subject,
                 body=text_content,
-                from_email="pharma.prjt.yde <'pharma.prjt.yde@gmail.com'",
+                from_email="pharma.prjt.yde <'pharma.prjt.yde@gmail.com'>",
                 to=[email],
             )
             email.attach_alternative(html_content, "text/html")
@@ -230,7 +227,7 @@ def suggestion(request):
                 send_mail(
                     objet,  # Utilisez l'objet saisi dans le formulaire comme sujet
                     message,
-                    "pharma.prjt.yde <'pharma.prjt.yde@gmail.com'",  # Expéditeur
+                    "pharma.prjt.yde <'pharma.prjt.yde@gmail.com'>",  # Expéditeur
                     ["pharma.prjt.yde@gmail.com"],  # Destinataire
                     fail_silently=False,
                     html_message=message
@@ -238,7 +235,7 @@ def suggestion(request):
                 send_mail(
                     objet,  # Utilisez l'objet saisi dans le formulaire comme sujet
                     message,
-                    "pharma.prjt.yde <'pharma.prjt.yde@gmail.com'",  # Expéditeur
+                    "pharma.prjt.yde <'pharma.prjt.yde@gmail.com'>",  # Expéditeur
                     [email],  # Destinataire
                     fail_silently=False,
                     html_message= f'<html><body style="background-color:  #f0f8f9;"> <p style="padding: 10px;"> Merci nous vous remercions pour l\'interet que vous portez a cette plateforme!</p> <p style="padding-left: 10px;">Vos suggestions seront prise en compte. <br> A bientot!! </p><p style="padding: 10px;">Cordialement,<br>L\'équipe pharma.prjt.yde</p><footer><center>&copy; 2023 pharma.prjt.yde</center></footer></body></html>'

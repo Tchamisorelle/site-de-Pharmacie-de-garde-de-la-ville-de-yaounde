@@ -50,3 +50,6 @@ class PharmacieDeGarde(models.Model):
     telephone2 = models.CharField(max_length=20)
     telephone3 = models.CharField(max_length=20)
     localisation = models.CharField(max_length=200)
+
+    class Meta:
+        db_table = 'formulaire_pharmaciedegarde' 
